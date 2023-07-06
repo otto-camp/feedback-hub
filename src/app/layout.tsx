@@ -1,5 +1,8 @@
+import Header from '@/layouts/Header'
 import './globals.css'
 import { Inter } from 'next/font/google'
+import { ThemeProvider } from '@/context/ThemeProvider'
+import Footer from '@/layouts/Footer'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -15,7 +18,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={`${inter.className} min-h-screen bg-background antialiased`}>
+        <ThemeProvider attribute='class' defaultTheme='system' enableSystem>
+          <Header />
+          {children}
+          <Footer />
+        </ThemeProvider>
+      </body>
     </html>
   )
 }
