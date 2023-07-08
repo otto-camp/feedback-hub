@@ -1,6 +1,8 @@
 import { Button } from '@/components/ui/Button';
 import FeaturesSection from './FeaturesSection';
 import FaqSection from './FaqSection';
+import Link from 'next/link';
+import Particles from '@/components/Particles';
 
 export default function Home() {
   return (
@@ -13,12 +15,15 @@ export default function Home() {
           A compelling headline that grabs attention and emphasizes the value
           proposition of your service.
         </p>
-        <Button size='lg'>Get Started</Button>
+        <Link href='/start' className='block'>
+          <Button size='lg'>Get Started</Button>
+        </Link>
       </section>
 
       <FeaturesSection />
 
-      <section className='bg-accent py-32'>
+      <section className='relative isolate bg-accent py-32'>
+        <Particles className='absolute inset-0 -z-10' quantity={100} />
         <div className='container mx-auto p-4'>
           <h2 className='text-balance text-center text-4xl font-black sm:text-6xl md:text-8xl lg:text-9xl'>
             Save time for your clients
@@ -28,18 +33,21 @@ export default function Home() {
 
       <FaqSection />
 
-      <section className='container mx-auto space-y-6 px-4 py-32 text-center'>
-        <h2 className='text-2xl font-bold sm:text-4xl md:text-6xl lg:text-7xl'>
-          Get Started
-        </h2>
-        <p className='mx-auto max-w-lg'>
-          Join the email marketing revolution for small businesses and
-          experience the incredible results for yourself. Don’t miss out on
-          achieving success!
-        </p>
-        <div className='mx-auto flex w-fit gap-4'>
-          <Button>Get Started</Button>
-          <Button variant='secondary'>Learn More</Button>
+      <section className='relative isolate bg-accent dark:bg-primary-foreground px-4 py-32 text-center'>
+        <Particles className='absolute inset-0 -z-10' quantity={100} />
+        <div className='container mx-auto space-y-6 p-4'>
+          <h2 className='text-2xl font-bold sm:text-4xl md:text-6xl lg:text-7xl'>
+            Get Started
+          </h2>
+          <p className='mx-auto max-w-lg'>
+            Join the email marketing revolution for small businesses and
+            experience the incredible results for yourself. Don’t miss out on
+            achieving success!
+          </p>
+          <div className='mx-auto flex w-fit gap-4'>
+            <Button>Get Started</Button>
+            <Button variant='secondary'>Learn More</Button>
+          </div>
         </div>
       </section>
     </main>

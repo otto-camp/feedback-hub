@@ -5,6 +5,7 @@ import { ThemeProvider } from '@/context/ThemeProvider';
 import Footer from '@/layouts/Footer';
 import Analytics from '@/layouts/Analytics';
 import { description, keywords, title } from '../MetadataDefault';
+import { Toaster } from '@/components/ui/Toast';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -28,6 +29,7 @@ export default function RootLayout({
           <Header />
           {children}
           <Footer />
+          <Toaster />
         </ThemeProvider>
         <Analytics />
       </body>

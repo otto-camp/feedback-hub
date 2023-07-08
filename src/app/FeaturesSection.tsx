@@ -52,7 +52,7 @@ export default function FeaturesSection() {
               alt={x.title}
               width={576}
               height={576}
-              className='mx-auto rounded-xl grayscale object-cover'
+              className='mx-auto rounded-xl grayscale-[80%] object-cover'
             />
             <div className='flex flex-col justify-center gap-6'>
               <h3 className='text-xl font-bold md:text-2xl'>{x.title}</h3>

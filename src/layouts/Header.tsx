@@ -8,9 +8,7 @@ import { useState } from 'react';
 
 const data = [
   { href: '/about', text: 'About' },
-  { href: '/services', text: 'Services' },
-  { href: '/blog', text: 'Blog' },
-  { href: '/faq', text: 'FAQ' },
+  { href: '/resources', text: 'Resources' },
 ];
 
 export default function Header() {
@@ -32,6 +30,9 @@ export default function Header() {
               {x.text}
             </Link>
           ))}
+          <Link href='/start'>
+            <Button>Get Started</Button>
+          </Link>
         </nav>
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
           <SheetTrigger asChild className='lg:hidden'>
@@ -51,6 +52,9 @@ export default function Header() {
                   {x.text}
                 </Link>
               ))}
+              <Link href='/start'>
+                <Button className='w-full'>Get Started</Button>
+              </Link>
             </nav>
           </SheetContent>
         </Sheet>
