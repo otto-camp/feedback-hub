@@ -67,3 +67,7 @@
     --ring: 240 3.7% 15.9%;
   }
 }
+
+.text-balance {
+  text-wrap: balance;
+}
