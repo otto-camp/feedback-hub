@@ -1,7 +1,18 @@
 'use client';
-import { Button } from '@/components/ui/Button';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/Avatar';
+import { Button, buttonVariants } from '@/components/ui/Button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuTrigger,
+} from '@/components/ui/DropdownMenu';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/Sheet';
-import { Menu } from 'lucide-react';
+import { User } from '@clerk/nextjs/dist/types/server';
+import { LogOut, Menu } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -11,8 +22,16 @@ const data = [
   { href: '/resources', text: 'Resources' },
 ];
 
-export default function Header() {
+export default function Header({ user }: { user: User | null }) {
   const [isOpen, setIsOpen] = useState(false);
+
+  const initials = `${user?.firstName?.charAt(0) ?? ''} ${
+    user?.lastName?.charAt(0) ?? ''
+  }`;
+  const email =
+    user?.emailAddresses?.find((e) => e.id === user.primaryEmailAddressId)
+      ?.emailAddress ?? '';
+
   return (
     <header className='sticky top-0 z-40 w-full border-b bg-background'>
       <div className='container mx-auto flex h-16 items-center justify-between p-4'>
@@ -30,9 +49,56 @@ export default function Header() {
               {x.text}
             </Link>
           ))}
-          <Link href='/start'>
-            <Button>Get Started</Button>
-          </Link>
+          {user ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant='secondary'
+                  className='relative h-8 w-8 rounded-full'
+                >
+                  <Avatar className='h-8 w-8'>
+                    <AvatarImage
+                      src={user.imageUrl}
+                      alt={user.username ?? ''}
+                    />
+                    <AvatarFallback>{initials}</AvatarFallback>
+                  </Avatar>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className='w-56' align='end' forceMount>
+                <DropdownMenuLabel className='font-normal'>
+                  <div className='flex flex-col space-y-1'>
+                    <p className='text-sm font-medium leading-none'>
+                      {user.firstName} {user.lastName}
+                    </p>
+                    <p className='text-xs leading-none text-muted-foreground'>
+                      {email}
+                    </p>
+                  </div>
+                </DropdownMenuLabel>
+
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link href='/signout'>
+                    <LogOut className='mr-2 h-4 w-4' aria-hidden='true' />
+                    Log out
+                    <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <Link href='/signin'>
+              <div
+                className={buttonVariants({
+                  size: 'sm',
+                })}
+              >
+                Sign In
+                <span className='sr-only'>Sign In</span>
+              </div>
+            </Link>
+          )}
         </nav>
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
           <SheetTrigger asChild className='lg:hidden'>
@@ -52,9 +118,6 @@ export default function Header() {
                   {x.text}
                 </Link>
               ))}
-              <Link href='/start'>
-                <Button className='w-full'>Get Started</Button>
-              </Link>
             </nav>
           </SheetContent>
         </Sheet>

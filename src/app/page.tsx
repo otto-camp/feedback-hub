@@ -15,7 +15,7 @@ export default function Home() {
           A compelling headline that grabs attention and emphasizes the value
           proposition of your service.
         </p>
-        <Link href='/start' className='block'>
+        <Link href='/signin' className='block'>
           <Button size='lg'>Get Started</Button>
         </Link>
       </section>
@@ -33,7 +33,7 @@ export default function Home() {
 
       <FaqSection />
 
-      <section className='relative isolate bg-accent dark:bg-primary-foreground px-4 py-32 text-center'>
+      <section className='relative isolate bg-accent px-4 py-32 text-center dark:bg-primary-foreground'>
         <Particles className='absolute inset-0 -z-10' quantity={100} />
         <div className='container mx-auto space-y-6 p-4'>
           <h2 className='text-2xl font-bold sm:text-4xl md:text-6xl lg:text-7xl'>
