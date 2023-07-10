@@ -7,7 +7,6 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@/components/ui/DropdownMenu';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/Sheet';
@@ -82,7 +81,6 @@ export default function Header({ user }: { user: User | null }) {
                   <Link href='/signout'>
                     <LogOut className='mr-2 h-4 w-4' aria-hidden='true' />
                     Log out
-                    <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
                   </Link>
                 </DropdownMenuItem>
               </DropdownMenuContent>
@@ -100,27 +98,81 @@ export default function Header({ user }: { user: User | null }) {
             </Link>
           )}
         </nav>
-        <Sheet open={isOpen} onOpenChange={setIsOpen}>
-          <SheetTrigger asChild className='lg:hidden'>
-            <Button variant='ghost'>
-              <Menu />
-              <span className='sr-only'>Toggle Menu</span>
-            </Button>
-          </SheetTrigger>
-          <SheetContent side='right'>
-            <nav className='flex flex-col gap-4 lg:hidden'>
-              {data.map((x) => (
-                <Link
-                  key={x.text}
-                  href={x.href}
-                  className='text-foreground/60 transition-colors hover:text-foreground/80'
+        <div className='flex items-center gap-4 lg:hidden'>
+          <Sheet open={isOpen} onOpenChange={setIsOpen}>
+            <SheetTrigger asChild>
+              <Button
+                variant='ghost'
+                className='p-0 hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0'
+              >
+                <Menu />
+                <span className='sr-only'>Toggle Menu</span>
+              </Button>
+            </SheetTrigger>
+            <SheetContent side='right'>
+              <nav className='flex flex-col gap-4 lg:hidden'>
+                {data.map((x) => (
+                  <Link
+                    key={x.text}
+                    href={x.href}
+                    className='text-foreground/60 transition-colors hover:text-foreground/80'
+                  >
+                    {x.text}
+                  </Link>
+                ))}
+              </nav>
+            </SheetContent>
+          </Sheet>
+          {user ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant='secondary'
+                  className='relative h-8 w-8 rounded-full'
                 >
-                  {x.text}
-                </Link>
-              ))}
-            </nav>
-          </SheetContent>
-        </Sheet>
+                  <Avatar className='h-8 w-8'>
+                    <AvatarImage
+                      src={user.imageUrl}
+                      alt={user.username ?? ''}
+                    />
+                    <AvatarFallback>{initials}</AvatarFallback>
+                  </Avatar>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className='w-56' align='end' forceMount>
+                <DropdownMenuLabel className='font-normal'>
+                  <div className='flex flex-col space-y-1'>
+                    <p className='text-sm font-medium leading-none'>
+                      {user.firstName} {user.lastName}
+                    </p>
+                    <p className='text-xs leading-none text-muted-foreground'>
+                      {email}
+                    </p>
+                  </div>
+                </DropdownMenuLabel>
+
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link href='/signout'>
+                    <LogOut className='mr-2 h-4 w-4' aria-hidden='true' />
+                    Log out
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <Link href='/signin'>
+              <div
+                className={buttonVariants({
+                  size: 'sm',
+                })}
+              >
+                Sign In
+                <span className='sr-only'>Sign In</span>
+              </div>
+            </Link>
+          )}
+        </div>
       </div>
     </header>
   );

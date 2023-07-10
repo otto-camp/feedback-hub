@@ -1,8 +1,8 @@
 import { Shell } from '@/components/Shell';
 
-export default function ResourcesPage() {
+export default function AboutPage() {
   return (
-    <main>
+    <div>
       <Shell>
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Totam
         consectetur reprehenderit animi? Distinctio, ad, mollitia molestiae esse
@@ -60,6 +60,6 @@ export default function ResourcesPage() {
         quis magnam, sapiente, cum facilis quidem at porro expedita dolor aut
         sed id illo?
       </Shell>
-    </main>
+    </div>
   );
 }

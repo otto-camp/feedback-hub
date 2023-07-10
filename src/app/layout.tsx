@@ -1,8 +1,6 @@
-import Header from '@/layouts/Header';
 import './globals.css';
 import { Inter } from 'next/font/google';
 import { ThemeProvider } from '@/context/ThemeProvider';
-import Footer from '@/layouts/Footer';
 import Analytics from '@/layouts/Analytics';
 import { description, keywords, title } from '../MetadataDefault';
 import { Toaster } from '@/components/ui/Toast';
@@ -21,7 +19,6 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const user = await currentUser();
   return (
     <ClerkProvider>
       <html lang='en'>
@@ -29,9 +26,7 @@ export default async function RootLayout({
           className={`${inter.className} min-h-screen bg-background antialiased`}
         >
           <ThemeProvider attribute='class' defaultTheme='system' enableSystem>
-            <Header user={user} />
             {children}
-            <Footer />
             <Toaster />
           </ThemeProvider>
           <Analytics />

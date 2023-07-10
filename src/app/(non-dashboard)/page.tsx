@@ -6,7 +6,7 @@ import Particles from '@/components/Particles';
 
 export default function Home() {
   return (
-    <main className='space-y-24'>
+    <div className='space-y-24'>
       <section className='mx-auto max-w-6xl space-y-12 px-4 py-32 text-center'>
         <h1 className='text-3xl font-extrabold sm:text-5xl md:text-7xl lg:text-8xl'>
           Start Your Email Outreach Effortlessly
@@ -50,6 +50,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-    </main>
+    </div>
   );
 }

@@ -2,7 +2,7 @@ import { Shell } from '@/components/Shell';
 
 export default function StartPage() {
   return (
-    <main className=''>
+    <div className=''>
       <Shell>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore quo et,
         quas labore atque dignissimos recusandae totam! Magnam hic aspernatur
@@ -11,6 +11,6 @@ export default function StartPage() {
         nostrum consectetur eius dolor perferendis eveniet non aliquam
         dignissimos. Architecto fuga earum quod?
       </Shell>
-    </main>
+    </div>
   );
 }
