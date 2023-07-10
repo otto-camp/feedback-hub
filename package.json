@@ -7,7 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "format": "prettier --write src"
+    "format": "prettier --write src",
+    "postinstall": "drizzle-kit generate:mysql",
+    "db:push": "drizzle-kit push:mysql",
+    "db:introspect": "drizzle-kit introspect:mysql",
+    "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
     "@clerk/nextjs": "^4.21.14",
@@ -24,6 +28,7 @@
     "@vercel/analytics": "^1.0.1",
     "class-variance-authority": "^0.6.1",
     "clsx": "^1.2.1",
+    "dotenv": "^16.3.1",
     "drizzle-orm": "^0.27.0",
     "lucide-react": "^0.258.0",
     "next": "13.4.8",
