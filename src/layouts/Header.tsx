@@ -4,6 +4,7 @@ import { Button, buttonVariants } from '@/components/ui/Button';
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -11,14 +12,14 @@ import {
 } from '@/components/ui/DropdownMenu';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/Sheet';
 import { User } from '@clerk/nextjs/dist/types/server';
-import { LogOut, Menu } from 'lucide-react';
+import { LayoutDashboard, LogOut, Menu, User2 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 
 const data = [
   { href: '/about', text: 'About' },
-  { href: '/resources', text: 'Resources' },
+  { href: '/features', text: 'Features' },
 ];
 
 export default function Header({ user }: { user: User | null }) {
@@ -35,15 +36,21 @@ export default function Header({ user }: { user: User | null }) {
     <header className='sticky top-0 z-40 w-full border-b bg-background'>
       <div className='container mx-auto flex h-16 items-center justify-between p-4'>
         <Link href='/' className='flex items-center gap-2 text-2xl font-black'>
-          <Image src='/logo.svg' alt='Flash Mail' width={32} height={32} />
-          <span>Flash Mail</span>
+          <Image
+            src='/logo.svg'
+            alt='Feedback Hub'
+            aria-hidden
+            width={32}
+            height={32}
+          />
+          <span>Feedback Hub</span>
         </Link>
         <nav className='hidden items-center gap-4 lg:flex'>
           {data.map((x) => (
             <Link
               key={x.text}
               href={x.href}
-              className='text-foreground/60 transition-colors hover:text-foreground/80'
+              className='text-foreground/80 transition-colors hover:text-foreground/60'
             >
               {x.text}
             </Link>
@@ -75,7 +82,24 @@ export default function Header({ user }: { user: User | null }) {
                     </p>
                   </div>
                 </DropdownMenuLabel>
-
+                <DropdownMenuSeparator />
+                <DropdownMenuGroup>
+                  <DropdownMenuItem asChild>
+                    <Link href='/dashboard'>
+                      <LayoutDashboard
+                        className='mr-2 h-4 w-4'
+                        aria-hidden='true'
+                      />
+                      Dashboard
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href='/dashboard/account'>
+                      <User2 className='mr-2 h-4 w-4' aria-hidden='true' />
+                      Account
+                    </Link>
+                  </DropdownMenuItem>
+                </DropdownMenuGroup>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
                   <Link href='/signout'>

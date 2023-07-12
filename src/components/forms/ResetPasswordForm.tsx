@@ -8,8 +8,8 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import type { z } from 'zod';
 
-import { authSchema } from '@/lib/validations/Auth';
-import { Button } from '../ui/Button';
+import { checkEmailSchema } from '@/lib/validations/Auth';
+import { Button } from '@/components/ui/Button';
 import {
   Form,
   FormControl,
@@ -17,23 +17,22 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '../ui/Form';
-import { Input } from '../ui/Input';
-import { PasswordInput } from '../ui/PasswordInput';
+} from '@/components/ui/Form';
+import { Input } from '@/components/ui/Input';
 import { Loader2 } from 'lucide-react';
 
-type Inputs = z.infer<typeof authSchema>;
+type Inputs = z.infer<typeof checkEmailSchema>;
 
-export function SignInForm() {
+export function ResetPasswordForm() {
   const router = useRouter();
-  const { isLoaded, signIn, setActive } = useSignIn();
+  const { isLoaded, signIn } = useSignIn();
   const [isPending, startTransition] = React.useTransition();
 
+  // react-hook-form
   const form = useForm<Inputs>({
-    resolver: zodResolver(authSchema),
+    resolver: zodResolver(checkEmailSchema),
     defaultValues: {
       email: '',
-      password: '',
     },
   });
 
@@ -42,18 +41,16 @@ export function SignInForm() {
 
     startTransition(async () => {
       try {
-        const result = await signIn.create({
+        const firstFactor = await signIn.create({
+          strategy: 'reset_password_email_code',
           identifier: data.email,
-          password: data.password,
         });
 
-        if (result.status === 'complete') {
-          await setActive({ session: result.createdSessionId });
-
-          router.push(`${window.location.origin}/`);
-        } else {
-          /*Investigate why the login hasn't completed */
-          console.log(result);
+        if (firstFactor.status === 'needs_first_factor') {
+          router.push('/signin/reset-password/step2');
+          toast.message('Check your email', {
+            description: 'We sent you a 6-digit verification code.',
+          });
         }
       } catch (error) {
         const unknownError = 'Something went wrong, please try again.';
@@ -84,26 +81,23 @@ export function SignInForm() {
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name='password'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Password</FormLabel>
-              <FormControl>
-                <PasswordInput placeholder='**********' {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button disabled={isPending}>
-          {isPending && (
-            <Loader2 className='mr-2 h-4 w-4 animate-spin' aria-hidden='true' />
-          )}
-          Sign in
-          <span className='sr-only'>Sign in</span>
-        </Button>
+        <div className='flex justify-between gap-4'>
+          <Button variant='secondary' onClick={() => router.push('/signin')}>
+            Go Back
+          </Button>
+          <Button disabled={isPending}>
+            {isPending && (
+              <Loader2
+                className='mr-2 h-4 w-4 animate-spin'
+                aria-hidden='true'
+              />
+            )}
+            Continue
+            <span className='sr-only'>
+              Continue to reset password verification
+            </span>
+          </Button>
+        </div>
       </form>
     </Form>
   );

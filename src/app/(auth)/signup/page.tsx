@@ -13,26 +13,26 @@ import {
   CardTitle,
 } from '@/components/ui/Card';
 import OAuthSignIn from '@/components/auth/OAuthSignIn';
-import { SignInForm } from '@/components/forms/SignInForm';
+import { SignUpForm } from '@/components/forms/SignUpForm';
 import { Shell } from '@/components/Shell';
 
 export const metadata: Metadata = {
   metadataBase: new URL(env.NEXT_PUBLIC_APP_URL),
-  title: 'Sign In',
-  description: 'Sign in to your account',
+  title: 'Sign Up',
+  description: 'Sign up for an account',
 };
 
-export default async function SignInPage() {
+export default async function SignUpPage() {
   const user = await currentUser();
   if (user) redirect('/');
 
   return (
-    <Shell className='min-h-screen max-w-lg'>
+    <Shell className='max-w-lg'>
       <Card>
         <CardHeader className='space-y-1'>
-          <CardTitle className='text-2xl'>Sign in</CardTitle>
+          <CardTitle className='text-2xl'>Sign up</CardTitle>
           <CardDescription>
-            Choose your preferred sign in method
+            Choose your preferred sign up method
           </CardDescription>
         </CardHeader>
         <CardContent className='grid gap-4'>
@@ -47,28 +47,19 @@ export default async function SignInPage() {
               </span>
             </div>
           </div>
-          <SignInForm />
+          <SignUpForm />
         </CardContent>
-        <CardFooter className='flex flex-wrap items-center justify-between gap-2'>
+        <CardFooter>
           <div className='text-sm text-muted-foreground'>
-            <span className='mr-1 hidden sm:inline-block'>
-              Don&apos;t have an account?
-            </span>
+            Already have an account?{' '}
             <Link
-              aria-label='Sign up'
-              href='/signup'
+              aria-label='Sign in'
+              href='/signin'
               className='text-primary underline-offset-4 transition-colors hover:underline'
             >
-              Sign up
+              Sign in
             </Link>
           </div>
-          <Link
-            aria-label='Reset password'
-            href='/signin/reset-password'
-            className='text-sm text-primary underline-offset-4 transition-colors hover:underline'
-          >
-            Reset password
-          </Link>
         </CardFooter>
       </Card>
     </Shell>

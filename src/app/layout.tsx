@@ -4,7 +4,7 @@ import { ThemeProvider } from '@/context/ThemeProvider';
 import Analytics from '@/layouts/Analytics';
 import { description, keywords, title } from '../MetadataDefault';
 import { Toaster } from '@/components/ui/Toast';
-import { ClerkProvider, currentUser } from '@clerk/nextjs';
+import { ClerkProvider } from '@clerk/nextjs';
 
 const inter = Inter({ subsets: ['latin'] });
 

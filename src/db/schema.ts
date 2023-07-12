@@ -5,16 +5,28 @@ import {
   serial,
   text,
   timestamp,
+  tinyint,
   varchar,
 } from 'drizzle-orm/mysql-core';
 
-export const emails = mysqlTable('emails', {
+export const feedback = mysqlTable('feedback', {
   id: serial('id').primaryKey(),
-  userId: int('user-id'),
-  senderEmail: varchar('sender-email', { length: 200 }).notNull(),
-  subject: varchar('subject', { length: 255 }).notNull(),
-  body: text('body'),
-  sendAt: timestamp('send-at'),
+  userId: int('user_id').notNull(),
+  feedback: text('feedback').notNull(),
+  createdAt: timestamp('created_at').defaultNow(),
+  updatedAt: timestamp('updated_at').onUpdateNow(),
 });
 
-export type Emails = InferModel<typeof emails>;
+export type Feedback = InferModel<typeof feedback>;
+
+export const testimonials = mysqlTable('testimonials', {
+  id: serial('id').primaryKey(),
+  userId: int('user_id').notNull(),
+  rating: tinyint('rating').notNull(),
+  review: varchar('review', { length: 2000 }),
+  status: text('status').notNull(),
+  createdAt: timestamp('created_at').defaultNow(),
+  updatedAt: timestamp('updated_at').onUpdateNow(),
+});
+
+export type Testimonials = InferModel<typeof testimonials>;

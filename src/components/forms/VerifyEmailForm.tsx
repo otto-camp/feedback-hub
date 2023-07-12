@@ -2,14 +2,13 @@
 
 import * as React from 'react';
 import { useRouter } from 'next/navigation';
-import { isClerkAPIResponseError, useSignIn } from '@clerk/nextjs';
+import { isClerkAPIResponseError, useSignUp } from '@clerk/nextjs';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import type { z } from 'zod';
-
-import { authSchema } from '@/lib/validations/Auth';
-import { Button } from '../ui/Button';
+import { verfifyEmailSchema } from '@/lib/validations/Auth';
+import { Button } from '@/components/ui/Button';
 import {
   Form,
   FormControl,
@@ -17,23 +16,22 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '../ui/Form';
-import { Input } from '../ui/Input';
-import { PasswordInput } from '../ui/PasswordInput';
+} from '@/components/ui/Form';
+import { Input } from '@/components/ui/Input';
 import { Loader2 } from 'lucide-react';
 
-type Inputs = z.infer<typeof authSchema>;
+type Inputs = z.infer<typeof verfifyEmailSchema>;
 
-export function SignInForm() {
+export function VerifyEmailForm() {
   const router = useRouter();
-  const { isLoaded, signIn, setActive } = useSignIn();
+  const { isLoaded, signUp, setActive } = useSignUp();
   const [isPending, startTransition] = React.useTransition();
 
+  // react-hook-form
   const form = useForm<Inputs>({
-    resolver: zodResolver(authSchema),
+    resolver: zodResolver(verfifyEmailSchema),
     defaultValues: {
-      email: '',
-      password: '',
+      code: '',
     },
   });
 
@@ -42,18 +40,18 @@ export function SignInForm() {
 
     startTransition(async () => {
       try {
-        const result = await signIn.create({
-          identifier: data.email,
-          password: data.password,
+        const completeSignUp = await signUp.attemptEmailAddressVerification({
+          code: data.code,
         });
-
-        if (result.status === 'complete') {
-          await setActive({ session: result.createdSessionId });
+        if (completeSignUp.status !== 'complete') {
+          /*  investigate the response, to see if there was an error
+             or if the user needs to complete more steps.*/
+          console.log(JSON.stringify(completeSignUp, null, 2));
+        }
+        if (completeSignUp.status === 'complete') {
+          await setActive({ session: completeSignUp.createdSessionId });
 
           router.push(`${window.location.origin}/`);
-        } else {
-          /*Investigate why the login hasn't completed */
-          console.log(result);
         }
       } catch (error) {
         const unknownError = 'Something went wrong, please try again.';
@@ -73,25 +71,19 @@ export function SignInForm() {
       >
         <FormField
           control={form.control}
-          name='email'
+          name='code'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel>Verification Code</FormLabel>
               <FormControl>
-                <Input placeholder='rodneymullen180@gmail.com' {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name='password'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Password</FormLabel>
-              <FormControl>
-                <PasswordInput placeholder='**********' {...field} />
+                <Input
+                  placeholder='169420'
+                  {...field}
+                  onChange={(e) => {
+                    e.target.value = e.target.value.trim();
+                    field.onChange(e);
+                  }}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -101,8 +93,8 @@ export function SignInForm() {
           {isPending && (
             <Loader2 className='mr-2 h-4 w-4 animate-spin' aria-hidden='true' />
           )}
-          Sign in
-          <span className='sr-only'>Sign in</span>
+          Create account
+          <span className='sr-only'>Create account</span>
         </Button>
       </form>
     </Form>

@@ -2,14 +2,14 @@
 
 import * as React from 'react';
 import { useRouter } from 'next/navigation';
-import { isClerkAPIResponseError, useSignIn } from '@clerk/nextjs';
+import { isClerkAPIResponseError, useSignUp } from '@clerk/nextjs';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import type { z } from 'zod';
 
 import { authSchema } from '@/lib/validations/Auth';
-import { Button } from '../ui/Button';
+import { Button } from '@/components/ui/Button';
 import {
   Form,
   FormControl,
@@ -17,18 +17,19 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '../ui/Form';
-import { Input } from '../ui/Input';
-import { PasswordInput } from '../ui/PasswordInput';
+} from '@/components/ui/Form';
+import { Input } from '@/components/ui/Input';
+import { PasswordInput } from '@/components/ui/PasswordInput';
 import { Loader2 } from 'lucide-react';
 
 type Inputs = z.infer<typeof authSchema>;
 
-export function SignInForm() {
+export function SignUpForm() {
   const router = useRouter();
-  const { isLoaded, signIn, setActive } = useSignIn();
+  const { isLoaded, signUp } = useSignUp();
   const [isPending, startTransition] = React.useTransition();
 
+  // react-hook-form
   const form = useForm<Inputs>({
     resolver: zodResolver(authSchema),
     defaultValues: {
@@ -42,19 +43,20 @@ export function SignInForm() {
 
     startTransition(async () => {
       try {
-        const result = await signIn.create({
-          identifier: data.email,
+        await signUp.create({
+          emailAddress: data.email,
           password: data.password,
         });
 
-        if (result.status === 'complete') {
-          await setActive({ session: result.createdSessionId });
+        // Send email verification code
+        await signUp.prepareEmailAddressVerification({
+          strategy: 'email_code',
+        });
 
-          router.push(`${window.location.origin}/`);
-        } else {
-          /*Investigate why the login hasn't completed */
-          console.log(result);
-        }
+        router.push('/signup/verify-email');
+        toast.message('Check your email', {
+          description: 'We sent you a 6-digit verification code.',
+        });
       } catch (error) {
         const unknownError = 'Something went wrong, please try again.';
 
@@ -101,8 +103,8 @@ export function SignInForm() {
           {isPending && (
             <Loader2 className='mr-2 h-4 w-4 animate-spin' aria-hidden='true' />
           )}
-          Sign in
-          <span className='sr-only'>Sign in</span>
+          Continue
+          <span className='sr-only'>Continue to email verification page</span>
         </Button>
       </form>
     </Form>
