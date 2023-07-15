@@ -15,7 +15,7 @@ export default async function DashboardPage() {
       <div className='flex flex-wrap justify-between gap-4'>
         <h1 className='text-3xl font-bold tracking-tight'>Dashboard</h1>
       </div>
-      <Tabs defaultValue='overview' className='space-y-4'>
+      <Tabs defaultValue='overview' className='space-y-4 min-h-screen'>
         <TabsList>
           <TabsTrigger value='overview'>Overview</TabsTrigger>
           <TabsTrigger value='testimonials'>Testimonials</TabsTrigger>

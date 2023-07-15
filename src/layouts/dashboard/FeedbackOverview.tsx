@@ -1,8 +1,17 @@
 import CreateFeedbackDialog from '@/components/dialogs/CreateFeedbackDialog';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
+import { Button } from '@/components/ui/Button';
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/Card';
 import { Feedback } from '@/db/schema';
+import { absoluteUrl } from '@/utils/absoluteUrl';
 import { User } from '@clerk/nextjs/dist/types/server';
 import { Star } from 'lucide-react';
+import Link from 'next/link';
 
 export default function FeedbackOverview({
   feedback,
@@ -11,6 +20,8 @@ export default function FeedbackOverview({
   feedback: Feedback[];
   user: User;
 }) {
+  console.log(feedback);
+
   return (
     <>
       <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
@@ -27,6 +38,26 @@ export default function FeedbackOverview({
         </Card>
       </div>
       <CreateFeedbackDialog user={user} />
+      <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3'>
+        {feedback.map((feed) => (
+          <Link href={absoluteUrl('feedback/' + feed.id.toString())}>
+            <Card>
+              <CardHeader>
+                <CardTitle>{feed.title}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p>{feed.description}</p>
+              </CardContent>
+              <CardFooter className='flex justify-between gap-4'>
+                <Button className='w-full'>Edit</Button>
+                <Button className='w-full' variant='destructive'>
+                  Delete
+                </Button>
+              </CardFooter>
+            </Card>
+          </Link>
+        ))}
+      </div>
     </>
   );
 }

@@ -1,11 +1,16 @@
 'use server';
 import { eq, sql } from 'drizzle-orm';
 import { db } from '.';
-import { feedback } from './schema';
+import { feedback, feedbackResponse } from './schema';
 import { type FeedbackInput } from '@/components/dialogs/CreateFeedbackDialog';
+import { FeedbackResponseInput } from '@/components/forms/FeedbackResponseForm';
 
 export const getFeedbacks = async (userId: string) => {
   return await db.select().from(feedback).where(eq(feedback.userId, userId));
+};
+
+export const getFeedbackById = async (id: number) => {
+  return await db.select().from(feedback).where(eq(feedback.id, id));
 };
 
 export const getFeedbackCount = async (userId: string) => {
@@ -20,5 +25,15 @@ export const createFeedback = async (userId: string, value: FeedbackInput) => {
     userId: userId,
     title: value.title,
     description: value.description,
+  });
+};
+
+export const createFeedbackResponse = async (
+  feedbackId: number,
+  value: FeedbackResponseInput
+) => {
+  return await db.insert(feedbackResponse).values({
+    feedbackId: feedbackId,
+    feedback: value.feedback,
   });
 };
