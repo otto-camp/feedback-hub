@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import type { z } from 'zod';
 
-import { authSchema } from '@/lib/validations/Auth';
+import { authSchema } from '@/lib/validations/auth';
 import { Button } from '../ui/Button';
 import {
   Form,
@@ -102,7 +102,6 @@ export function SignInForm() {
             <Loader2 className='mr-2 h-4 w-4 animate-spin' aria-hidden='true' />
           )}
           Sign in
-          <span className='sr-only'>Sign in</span>
         </Button>
       </form>
     </Form>

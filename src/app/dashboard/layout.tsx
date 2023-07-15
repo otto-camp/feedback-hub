@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation';
 import { currentUser } from '@clerk/nextjs';
-import Header from '@/layouts/Header';
 import Footer from '@/layouts/Footer';
+import Header from '../../layouts/dashboard/Header';
 
 export default async function DashboardLayout({
   children,

@@ -7,7 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import type { z } from 'zod';
-import { resetPasswordSchema } from '@/lib/validations/Auth';
+import { resetPasswordSchema } from '@/lib/validations/auth';
 import { Button } from '@/components/ui/Button';
 import {
   Form,

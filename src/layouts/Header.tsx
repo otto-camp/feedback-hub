@@ -174,7 +174,24 @@ export default function Header({ user }: { user: User | null }) {
                     </p>
                   </div>
                 </DropdownMenuLabel>
-
+                <DropdownMenuSeparator />
+                <DropdownMenuGroup>
+                  <DropdownMenuItem asChild>
+                    <Link href='/dashboard'>
+                      <LayoutDashboard
+                        className='mr-2 h-4 w-4'
+                        aria-hidden='true'
+                      />
+                      Dashboard
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href='/dashboard/account'>
+                      <User2 className='mr-2 h-4 w-4' aria-hidden='true' />
+                      Account
+                    </Link>
+                  </DropdownMenuItem>
+                </DropdownMenuGroup>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
                   <Link href='/signout'>
