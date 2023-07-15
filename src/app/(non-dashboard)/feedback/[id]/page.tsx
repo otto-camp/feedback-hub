@@ -12,11 +12,17 @@ export default async function FeedbackPage({
 
   return (
     <Shell variant='markdown' className='prose min-h-screen dark:prose-invert'>
-      <time className='text-sm'>{formatDate(feedback?.createdAt!)}</time>
-      <h1>{feedback?.title}</h1>
-      <p>{feedback?.description}</p>
-      <hr />
-      <FeedbackResponseForm feedbackId={feedback?.id!} />
+      {feedback ? (
+        <>
+          <time className='text-sm'>{formatDate(feedback.createdAt!)}</time>
+          <h1>{feedback.title}</h1>
+          <p>{feedback.description}</p>
+          <hr />
+          <FeedbackResponseForm feedbackId={feedback.id!} />
+        </>
+      ) : (
+        ''
+      )}
     </Shell>
   );
 }

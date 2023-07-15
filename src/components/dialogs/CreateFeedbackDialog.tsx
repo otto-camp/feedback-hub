@@ -24,7 +24,7 @@ import { createFeedbackSchema } from '@/lib/validations/feedback';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '../ui/Input';
 import { Loader2 } from 'lucide-react';
-import { User } from '@clerk/nextjs/dist/types/server';
+import { type User } from '@clerk/nextjs/dist/types/server';
 import { createFeedback } from '@/db/queries';
 import { toast } from 'sonner';
 import { catchError } from '@/utils/catchError';

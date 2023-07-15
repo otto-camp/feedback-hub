@@ -1,18 +1,18 @@
-import { type HandleOAuthCallbackParams } from "@clerk/types"
+import { type HandleOAuthCallbackParams } from '@clerk/types';
 
-import SSOCallback from "@/components/auth/SSOCallback"
-import { Shell } from "@/components/Shell"
+import SSOCallback from '@/components/auth/SSOCallback';
+import { Shell } from '@/components/Shell';
 
 export interface SSOCallbackPageProps {
-  searchParams: HandleOAuthCallbackParams
+  searchParams: HandleOAuthCallbackParams;
 }
 
 export default function SSOCallbackPage({
   searchParams,
 }: SSOCallbackPageProps) {
   return (
-    <Shell className="max-w-lg">
+    <Shell className='max-w-lg'>
       <SSOCallback searchParams={searchParams} />
     </Shell>
-  )
+  );
 }

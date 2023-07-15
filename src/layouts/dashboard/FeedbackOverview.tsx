@@ -7,9 +7,9 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/Card';
-import { Feedback } from '@/db/schema';
+import { type Feedback } from '@/db/schema';
 import { absoluteUrl } from '@/utils/absoluteUrl';
-import { User } from '@clerk/nextjs/dist/types/server';
+import { type User } from '@clerk/nextjs/dist/types/server';
 import { Star } from 'lucide-react';
 import Link from 'next/link';
 

@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/DropdownMenu';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/Sheet';
-import { User } from '@clerk/nextjs/dist/types/server';
+import { type User } from '@clerk/nextjs/dist/types/server';
 import { LayoutDashboard, LogOut, Menu, User2 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';

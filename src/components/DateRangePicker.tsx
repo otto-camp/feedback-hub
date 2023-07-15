@@ -6,8 +6,8 @@ import { Button } from './ui/Button';
 import { cn } from '@/utils/cn';
 import { CalendarIcon } from 'lucide-react';
 import { Calendar } from './ui/Calendar';
-import { addDays, format } from 'date-fns';
-import { DateRange } from 'react-day-picker';
+import { format } from 'date-fns';
+import { type DateRange } from 'react-day-picker';
 
 export function DateRangePicker({
   className,

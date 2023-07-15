@@ -3,7 +3,7 @@ import { eq, sql } from 'drizzle-orm';
 import { db } from '.';
 import { feedback, feedbackResponse } from './schema';
 import { type FeedbackInput } from '@/components/dialogs/CreateFeedbackDialog';
-import { FeedbackResponseInput } from '@/components/forms/FeedbackResponseForm';
+import { type FeedbackResponseInput } from '@/components/forms/FeedbackResponseForm';
 
 export const getFeedbacks = async (userId: string) => {
   return await db.select().from(feedback).where(eq(feedback.userId, userId));

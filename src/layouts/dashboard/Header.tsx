@@ -7,7 +7,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/DropdownMenu';
-import { User } from '@clerk/nextjs/dist/types/server';
+import { type User } from '@clerk/nextjs/dist/types/server';
 import { LogOut } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';

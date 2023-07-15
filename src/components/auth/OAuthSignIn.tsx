@@ -5,7 +5,7 @@ import { isClerkAPIResponseError, useSignIn } from '@clerk/nextjs';
 import { toast } from 'sonner';
 
 import { Button } from '../ui/Button';
-import { OAuthStrategy } from '@clerk/nextjs/dist/types/server';
+import { type OAuthStrategy } from '@clerk/nextjs/dist/types/server';
 import { Loader2 } from 'lucide-react';
 
 const oauthProviders = [
