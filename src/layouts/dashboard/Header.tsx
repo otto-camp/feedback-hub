@@ -7,22 +7,29 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/DropdownMenu';
-import { type User } from '@clerk/nextjs/dist/types/server';
 import { LogOut } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+
 const data = [
   { href: '/dashboard', text: 'Dashboard', active: false },
   { href: '/dashboard/account', text: 'Account', active: false },
+  { href: '/dashboard/feedback', text: 'Feedback', active: false },
+  { href: '/dashboard/testimonial', text: 'Testimonial', active: false },
 ];
 
-export default function Header({ user }: { user: User | null }) {
-  const initials = `${user?.firstName?.charAt(0) ?? ''} ${
-    user?.lastName?.charAt(0) ?? ''
-  }`;
-  const email =
-    user?.emailAddresses?.find((e) => e.id === user.primaryEmailAddressId)
-      ?.emailAddress ?? '';
+export default function Header({
+  firstName,
+  lastName,
+  imageUrl,
+  email,
+}: {
+  firstName: string | null;
+  lastName: string | null;
+  imageUrl: string | null;
+  email: string;
+}) {
+  const initials = `${firstName?.charAt(0) ?? ''} ${lastName?.charAt(0) ?? ''}`;
 
   return (
     <header className='shadow-primary/15 sticky top-4 z-40 mx-auto max-w-3xl'>
@@ -53,7 +60,7 @@ export default function Header({ user }: { user: User | null }) {
 
         <div className='flex items-center gap-4'>
           <div className='flex flex-col justify-between text-xs font-semibold text-muted-foreground'>
-            <span>{user?.firstName + ' ' + user?.lastName}</span>
+            <span>{firstName + ' ' + lastName}</span>
             <span>{email}</span>
           </div>
           <DropdownMenu>
@@ -63,10 +70,7 @@ export default function Header({ user }: { user: User | null }) {
                 className='relative h-8 w-8 rounded-full'
               >
                 <Avatar className='h-8 w-8'>
-                  <AvatarImage
-                    src={user?.imageUrl}
-                    alt={user?.username ?? ''}
-                  />
+                  <AvatarImage src={imageUrl!} alt={firstName ?? ''} />
                   <AvatarFallback>{initials}</AvatarFallback>
                 </Avatar>
               </Button>

@@ -1,7 +1,8 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
-import { Star, StarHalf } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
+import { Star, StarHalf } from "lucide-react";
 
-export default function TestimonialsOverview() {
+
+export default function TestimonialPage() {
   return (
     <div className='grid grid-cols-1 gap-4 md:grid-cols-3'>
       <Card>
@@ -43,5 +44,5 @@ export default function TestimonialsOverview() {
         </CardContent>
       </Card>
     </div>
-  );
+  )
 }

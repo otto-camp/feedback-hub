@@ -24,14 +24,13 @@ import { createFeedbackSchema } from '@/lib/validations/feedback';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '../ui/Input';
 import { Loader2 } from 'lucide-react';
-import { type User } from '@clerk/nextjs/dist/types/server';
 import { createFeedback } from '@/db/queries';
 import { toast } from 'sonner';
 import { catchError } from '@/utils/catchError';
 
 export type FeedbackInput = z.infer<typeof createFeedbackSchema>;
 
-export default function CreateFeedbackDialog({ user }: { user: User }) {
+export default function CreateFeedbackDialog({ userId }: { userId: string }) {
   const [isPending, startTransition] = useTransition();
 
   const form = useForm<FeedbackInput>({
@@ -44,7 +43,7 @@ export default function CreateFeedbackDialog({ user }: { user: User }) {
   function onSubmit(data: FeedbackInput) {
     startTransition(async () => {
       try {
-        await createFeedback(user.id, {
+        await createFeedback(userId, {
           ...data,
         });
 

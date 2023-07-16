@@ -11,7 +11,7 @@ export default async function FeedbackPage({
   const feedback = (await getFeedbackById(id)).at(0);
 
   return (
-    <Shell variant='markdown' className='prose min-h-screen dark:prose-invert'>
+    <Shell variant='markdown' className='prose dark:prose-invert'>
       {feedback ? (
         <>
           <time className='text-sm'>{formatDate(feedback.createdAt!)}</time>

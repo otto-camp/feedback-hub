@@ -53,7 +53,7 @@ export default function FeedbackResponseForm({
   return (
     <Form {...form}>
       <form
-        className='grid gap-4'
+        className='grid gap-4 h-full'
         onSubmit={(...args) => void form.handleSubmit(onSubmit)(...args)}
       >
         <FormField

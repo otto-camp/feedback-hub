@@ -16,8 +16,13 @@ export default async function DashboardLayout({
 
   return (
     <>
-      <Header user={user} />
-      <main>{children}</main>
+      <Header
+        firstName={user.firstName}
+        lastName={user.lastName}
+        imageUrl={user.imageUrl}
+        email={user.emailAddresses[0].emailAddress}
+      />
+      <main className='min-h-screen'>{children}</main>
       <Footer />
     </>
   );
