@@ -6,6 +6,8 @@ import TestimonialsOverview from '@/layouts/dashboard/TestimonialsOverview';
 import { getFeedbacks } from '@/db/queries';
 import { currentUser } from '@clerk/nextjs';
 
+export const runtime = 'edge';
+
 export default async function DashboardPage() {
   const user = await currentUser();
   const feedbacks = await getFeedbacks(user!.id);

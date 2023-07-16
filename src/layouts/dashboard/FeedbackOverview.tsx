@@ -20,8 +20,7 @@ export default function FeedbackOverview({
   feedback: Feedback[];
   user: User;
 }) {
-  console.log(feedback);
-
+  
   return (
     <>
       <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
